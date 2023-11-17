@@ -20,7 +20,7 @@ const MenuCategory = ({ items, title, coverImg }) => {
                 }
             </div>
             <div className="flex justify-center items-center mb-10">
-                <Link to='/order'>
+                <Link to={`/order/${title}`}>
                     <button className="btn btn-outline border-0 border-b-4">Order Now</button>
                 </Link>
             </div>
