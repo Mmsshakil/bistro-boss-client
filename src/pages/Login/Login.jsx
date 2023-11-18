@@ -1,11 +1,16 @@
 
-import { useEffect, useRef, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../providers/AuthProvider';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
 
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
+
+    const { signIn } = useContext(AuthContext)
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -17,17 +22,26 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
     }
 
-    const validateCaptchaValue = () =>{
+    const validateCaptchaValue = () => {
 
         const value = captchaRef.current.value;
 
-        if (validateCaptcha(value)==true) {
+        if (validateCaptcha(value) == true) {
             // alert('Captcha Matched');
             setDisabled(false);
         }
-   
+
         else {
             // alert('Captcha Does Not Match');
             setDisabled(true);
@@ -35,7 +49,11 @@ const Login = () => {
     }
 
     return (
+
         <div className="hero min-h-screen bg-base-200">
+            <Helmet>
+                <title>Bistro Boss | Login</title>
+            </Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="text-center lg:text-left">
                     <h1 className="text-5xl font-bold">Login now!</h1>
@@ -70,6 +88,9 @@ const Login = () => {
                             <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
                         </div>
                     </form>
+                    <div className='text-center mb-5 text-yellow-600'>
+                        <h2>New here? <Link className='font-bold' to='/signup'>Create a New Account</Link></h2>
+                    </div>
                 </div>
             </div>
         </div>
