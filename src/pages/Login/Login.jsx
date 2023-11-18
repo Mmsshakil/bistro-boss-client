@@ -2,13 +2,16 @@
 import { useContext, useEffect, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 
 const Login = () => {
 
-    
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const [disabled, setDisabled] = useState(true);
 
     const { signIn } = useContext(AuthContext)
@@ -35,7 +38,9 @@ const Login = () => {
                     title: "Your work has been saved",
                     showConfirmButton: false,
                     timer: 1500
-                  });
+                });
+
+                navigate(from, { replace: true });
 
             })
             .catch(error => {
@@ -91,7 +96,7 @@ const Login = () => {
                                 <LoadCanvasTemplate />
                             </label>
                             <input onBlur={validateCaptchaValue} type="text" name="captcha" placeholder="Type the text above" className="input input-bordered" required />
-                           
+
                         </div>
                         <div className="form-control mt-6">
 
