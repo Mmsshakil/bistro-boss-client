@@ -1,10 +1,9 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-
-
+import Swal from "sweetalert2";
 
 
 
@@ -13,22 +12,49 @@ const SIgnUp = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm();
 
-    const {createUser} = useContext(AuthContext);
+    const { createUser, updateUser, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         console.log(data);
-        
+
         createUser(data.email, data.password)
-        .then(result =>{
-            const user = result.user;
-            console.log(user);
-        })
-        .catch(error =>{
-            console.log(error.message);
-        })
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+
+                updateUser(data.name, data.photoURL)
+                    .then(() => {
+                        console.log('user profile updated');
+                        reset();
+
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "User created successfully",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        logOut()
+                            .then(() => {
+                                navigate('/login');
+
+                            })
+                            .catch()
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
     }
 
     return (
@@ -49,6 +75,13 @@ const SIgnUp = () => {
                             </label>
                             <input type="text" {...register("name", { required: true })} placeholder="Name" className="input input-bordered" />
                             {errors.name && <span className="text-red-600 pt-1">Name is required</span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Photo URl</span>
+                            </label>
+                            <input type="text" {...register("photo", { required: true })} placeholder="Photo URL" className="input input-bordered" />
+                            {errors.photo && <span className="text-red-600 pt-1">Photo URL is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
