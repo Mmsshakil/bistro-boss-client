@@ -98,9 +98,9 @@ const Login = () => {
                             <input onBlur={validateCaptchaValue} type="text" name="captcha" placeholder="Type the text above" className="input input-bordered" required />
 
                         </div>
-                        <div className="form-control mt-6">
+                        <div className="form-control mt-6 flex items-center justify-center">
 
-                            <input disabled={disabled} className="btn btn-primary" type="submit" value="Login" />
+                            <input disabled={disabled} className="px-6 py-2 font-medium bg-indigo-500 text-white w-fit transition-all shadow-[3px_3px_0px_white] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]" type="submit" value="Login" />
                         </div>
                     </form>
                     <div className='text-center mb-5 text-yellow-600'>
