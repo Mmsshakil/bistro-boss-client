@@ -4,9 +4,14 @@ import { FaCalendar, FaHouse, FaWallet } from "react-icons/fa6";
 import { TbMessageDollar } from "react-icons/tb";
 import { BsCalendar3 } from "react-icons/bs";
 import { LuShoppingBag } from "react-icons/lu";
+import { MdAttachEmail } from "react-icons/md";
 
 
 const DashBoard = () => {
+
+    
+    const isAdmin = true;
+
     return (
         <div className="flex">
             <div className="w-64 min-h-screen bg-blue-600">
@@ -25,9 +30,12 @@ const DashBoard = () => {
 
                     <div className="divider"></div>
 
+                    {/* shared nav links */}
+
                     <li><NavLink to='/'><FaHouse></FaHouse>Home</NavLink></li>
-                   
+
                     <li><NavLink to='/menu'><LuShoppingBag></LuShoppingBag>Order</NavLink></li>
+                    <li><NavLink to='/'><MdAttachEmail></MdAttachEmail>Contact</NavLink></li>
                 </ul>
             </div>
 

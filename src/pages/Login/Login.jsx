@@ -5,6 +5,8 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
+import { FaGoogle } from "react-icons/fa";
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const Login = () => {
 
@@ -106,6 +108,10 @@ const Login = () => {
                     <div className='text-center mb-5 text-yellow-600'>
                         <h2>New here? <Link className='font-bold' to='/signup'>Create a New Account</Link></h2>
                     </div>
+                    <div className="divider divider-info">Social Login</div>
+
+                    {/* TODO: here will add the google login button */}
+                    <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>

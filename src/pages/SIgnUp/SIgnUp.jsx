@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 
 
 const SIgnUp = () => {
+
+    const axiosPublic = useAxiosPublic();
 
     const {
         register,
@@ -29,23 +33,33 @@ const SIgnUp = () => {
 
                 updateUser(data.name, data.photoURL)
                     .then(() => {
-                        console.log('user profile updated');
-                        reset();
+                        // console.log('user profile updated');
 
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "User created successfully",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user added to the database');
+                                    reset();
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "User created successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
 
-                        logOut()
-                            .then(() => {
-                                navigate('/login');
+                                    logOut()
+                                        .then(() => {
+                                            navigate('/login');
 
+                                        })
+                                        .catch()
+                                }
                             })
-                            .catch()
 
                     })
                     .catch(error => {
@@ -123,6 +137,9 @@ const SIgnUp = () => {
                     <div className='text-center mb-5 text-yellow-600'>
                         <h2>Already registered? <Link className='font-bold' to='/login'>Go to log in</Link></h2>
                     </div>
+                    <div className="divider divider-info">Social Login
+                    </div>
+                    <SocialLogin></SocialLogin>
                 </div>
             </div>
         </div>
