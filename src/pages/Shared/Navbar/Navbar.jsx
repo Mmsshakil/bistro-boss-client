@@ -25,7 +25,7 @@ const Navbar = () => {
         <li><Link to='/menu'>Our Menu</Link></li>
         <li><Link to='/order/salad'>Order</Link></li>
         <li><Link to='/signup'>Sign Up</Link></li>
-        <li><Link to='/'>
+        <li><Link to='/dashboard/cart'>
             <button className="btn">
                 <div className="text-xl mr-2">
                     <BsCart4 />
