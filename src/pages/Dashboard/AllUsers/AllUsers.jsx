@@ -6,17 +6,13 @@ import Swal from "sweetalert2";
 
 const AllUsers = () => {
 
-    console.log(localStorage.getItem('access-token'));
+    // console.log(localStorage.getItem('access-token'));
     const axiosSecure = useAxiosSecure();
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users', {
-                headers: {
-                    authorization: `Bearer ${localStorage.getItem('access-token')}`
-                }
-            });
+            const res = await axiosSecure.get('/users');
             return res.data;
         }
     })
