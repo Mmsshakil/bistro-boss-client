@@ -2,8 +2,8 @@ import { Navigate, useLocation } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import userAuth from "../hooks/userAuth";
 
-const AdminRoute = (children) => {
-    const [user, loading] = userAuth();
+const AdminRoute = ({children}) => {
+    const {user, loading} = userAuth();
     const [isAdmin, isAdminLoading] = useAdmin();
 
     const location = useLocation();
@@ -16,7 +16,7 @@ const AdminRoute = (children) => {
         return children;
     }
 
-    return <Navigate to='/login' state={{ from: location }} replace ></Navigate>;
+    return <Navigate to='/' state={{ from: location }} replace ></Navigate>;
 };
 
 export default AdminRoute;

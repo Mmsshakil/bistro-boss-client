@@ -16,6 +16,7 @@ const DashBoard = () => {
 
 
     const [isAdmin] = useAdmin();
+    // const isAdmin = true;
 
     return (
         <div className="flex">
