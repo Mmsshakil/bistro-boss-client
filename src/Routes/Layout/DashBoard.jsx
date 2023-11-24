@@ -9,12 +9,13 @@ import { FaUtensils } from "react-icons/fa";
 import { FcManager } from "react-icons/fc";
 import { CiCircleList } from "react-icons/ci";
 import { FaBook } from "react-icons/fa";
+import useAdmin from "../../hooks/useAdmin";
 
 
 const DashBoard = () => {
 
 
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
 
     return (
         <div className="flex">
